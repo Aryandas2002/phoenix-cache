@@ -1,0 +1,15 @@
+services:
+  node1:
+    build: .
+    command: [node, --port, '8101', --host, 0.0.0.0]
+  node2:
+    build: .
+    command: [node, --port, '8102', --host, 0.0.0.0]
+  node3:
+    build: .
+    command: [node, --port, '8103', --host, 0.0.0.0]
+  gateway:
+    build: .
+    command: [gateway, --port, '8080', --host, 0.0.0.0, --nodes, 'http://node1:8101,http://node2:8102,http://node3:8103']
+    ports: ['127.0.0.1:8080:8080']
+    depends_on: [node1, node2, node3]
